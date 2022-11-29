@@ -1,10 +1,10 @@
 import torch
 from torch import nn
 
-from TTS.fastspeech2.model.transformer import FFTBlock
-from TTS.fastspeech2.text import symbols
+from fastspeech2.model.transformer import FFTBlock
+from fastspeech2.text import symbols
 
-from TTS.fastspeech2.configs import model_config
+from fastspeech2.configs import model_config
 
 
 def get_non_pad_mask(seq):

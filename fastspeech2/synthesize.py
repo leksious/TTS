@@ -1,9 +1,9 @@
 import os
 
-from TTS.fastspeech2 import text
-from TTS.fastspeech2.audio import tools
-from TTS.fastspeech2.configs import train_config
-from TTS.fastspeech2.model.fastspeech2 import FastSpeech2
+import text
+from fastspeech2.audio import tools
+from fastspeech2.configs import train_config
+from fastspeech2.model.fastspeech2 import FastSpeech2
 import torch
 import numpy as np
 from tqdm import tqdm
@@ -17,7 +17,7 @@ model.load_state_dict(checkpoint['model'])
 print(model)
 
 
-def synthesis(model, text, iter, alpha=1.0):
+def synthesis(model, text, iter, alpha=1.0, beta=1.0, gamma=1.0):
     batch_text = []
     batch_src_pos = []
 
@@ -32,7 +32,8 @@ def synthesis(model, text, iter, alpha=1.0):
     batch_src_pos = torch.from_numpy(np.array(batch_src_pos)).long()
 
     with torch.no_grad():
-        mel, _, _, _ = model.forward(batch_text.to(device), batch_src_pos.to(device), max_src_pos, e_control=alpha)
+        mel, _, _, _ = model.forward(batch_text.to(device), batch_src_pos.to(device), max_src_pos,
+                                     e_control=alpha, d_control=beta,p_control=gamma)
     return mel[iter].cpu().transpose(0, 1)
 
 
@@ -49,10 +50,28 @@ def get_data():
 data_list = get_data()
 for energy in [0.8, 1., 1.3]:
     for i, phn in tqdm(enumerate(data_list)):
-        mel = synthesis(model, phn, i, energy)
+        mel = synthesis(model, phn, i, alpha=energy)
 
         os.makedirs("results", exist_ok=True)
 
         tools.inv_mel_spec(
             mel, f"results/s={energy}_{i}.wav"
         )
+
+for i, phn in tqdm(enumerate(data_list)):
+    mel = synthesis(model, phn, i, alpha=0.8, beta=0.8, gamma=0.8)
+
+    os.makedirs("results", exist_ok=True)
+
+    tools.inv_mel_spec(
+        mel, f"results/s_all={0.8}_{i}.wav"
+    )
+
+for i, phn in tqdm(enumerate(data_list)):
+    mel = synthesis(model, phn, i, alpha=1.2, beta=1.2, gamma=1.2)
+
+    os.makedirs("results", exist_ok=True)
+
+    tools.inv_mel_spec(
+        mel, f"results/s_all={1.2}_{i}.wav"
+    )

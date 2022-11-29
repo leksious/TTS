@@ -1,8 +1,8 @@
 import torch
 from torch import nn
 
-from TTS.fastspeech2.VarianceAdaptorBlock.VarianceAdaptor import VarianceAdaptor
-from TTS.fastspeech2.model.EncoderDecoder import Encoder, Decoder
+from fastspeech2.VarianceAdaptorBlock.VarianceAdaptor import VarianceAdaptor
+from fastspeech2.model.EncoderDecoder import Encoder, Decoder
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 

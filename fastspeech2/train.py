@@ -7,9 +7,9 @@ from torch.utils.data import DataLoader
 
 from wandb_writer import WanDBWriter
 
-from TTS.fastspeech2.configs import train_config
-from TTS.fastspeech2.model.fastspeech2 import FastSpeech2
-from TTS.fastspeech2.loss import FastSpeech2Loss
+from fastspeech2.configs import train_config
+from fastspeech2.model.fastspeech2 import FastSpeech2
+from fastspeech2.loss import FastSpeech2Loss
 import dataset as ds
 from tqdm import tqdm
 

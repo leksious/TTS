@@ -2,12 +2,11 @@ import json
 
 import numpy as np
 import os
-import tgt
 from datasets import Audio
 from scipy.io.wavfile import read
 import pyworld as pw
 import torch
-from . import hparams as hp
+import hparams as hp
 
 
 def build_from_path(in_dir, out_dir):

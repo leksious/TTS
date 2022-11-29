@@ -1,10 +1,11 @@
 import numpy as np
 import torch
 from torch import nn
-from .DurationPredictor import DurationPredictor
-from .utilities import create_alignment
+
+from fastspeech2.VarianceAdaptorBlock.DurationPredictor import DurationPredictor
 from torch.nn import functional as F
 
+from fastspeech2.VarianceAdaptorBlock.utilities import create_alignment
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

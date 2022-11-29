@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from torch import nn
 
-from .utilities import Transpose
+from fastspeech2.VarianceAdaptorBlock.utilities import Transpose
 
 
 class DurationPredictor(nn.Module):
