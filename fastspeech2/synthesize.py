@@ -75,3 +75,13 @@ for i, phn in tqdm(enumerate(data_list)):
     tools.inv_mel_spec(
         mel, f"results/s_all={1.2}_{i}.wav"
     )
+
+
+for i, phn in tqdm(enumerate(data_list)):
+    mel = synthesis(model, phn, i, alpha=1, beta=1, gamma=1)
+
+    os.makedirs("results", exist_ok=True)
+
+    tools.inv_mel_spec(
+        mel, f"results/base_configs={i}.wav"
+    )
